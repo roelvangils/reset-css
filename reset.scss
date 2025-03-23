@@ -1,0 +1,304 @@
+// =============================================================================
+// Eleven Ways Accessibility Reset CSS
+// This CSS Reset focuses on accessibility and readability.
+// - Roel Van Gils
+// =============================================================================
+
+// Reset Variables
+// -----------------------------------------------------------------------------
+$font-stack-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+$font-stack-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo,
+    monospace;
+$focus-outline-width: 2px;
+$focus-outline-color: currentColor;
+$focus-outline-offset: 2px;
+
+// -----------------------------------------------------------------------------
+// Base Reset
+// -----------------------------------------------------------------------------
+*,
+::after,
+::before {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Root Element Settings
+// -----------------------------------------------------------------------------
+:where(:root) {
+    // Typography settings
+    font-size: 100%; // 16px by default
+    line-height: 1.5;
+    font-family: $font-stack-system;
+
+    // Text rendering
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    // Box model
+    box-sizing: border-box;
+
+    // Modern CSS features
+    scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+
+    // Page width
+    @media (min-width: 768px) {
+        font-size: 112.5%; // 18px
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Typography
+// -----------------------------------------------------------------------------
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+:where(h1) {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+// Paragraphs
+p {
+    text-wrap: pretty;
+
+    & + p {
+        margin-top: 1rem;
+    }
+}
+
+// Text elements
+:where(b, strong) {
+    font-weight: bolder;
+}
+
+:where(abbr[title]) {
+    text-decoration: underline dotted;
+    -webkit-text-decoration: underline dotted;
+}
+
+// Readability improvements
+p,
+li,
+blockquote {
+    max-width: 70ch;
+}
+
+article,
+section {
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+}
+
+// Code elements
+code,
+pre,
+kbd,
+samp {
+    font-family: $font-stack-mono;
+    font-size: 0.9em;
+}
+
+pre {
+    overflow-x: auto;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    white-space: pre-wrap;
+}
+
+kbd {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    padding: 0.1em 0.4em;
+}
+
+// -----------------------------------------------------------------------------
+// Lists
+// -----------------------------------------------------------------------------
+:where(dl, ol, ul) {
+    margin: 1em 0;
+}
+
+:where(ol ol, ol ul, ol dl, ul ol, ul ul, ul dl, dl ol, dl ul, dl dl) {
+    margin: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Links
+// -----------------------------------------------------------------------------
+a {
+    &[href^='http']:not([href*='yourdomain.com'])::after {
+        content: ' ↗';
+        display: inline-block;
+    }
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: currentColor;
+    text-underline-offset: 2px;
+}
+
+// -----------------------------------------------------------------------------
+// Media Elements
+// -----------------------------------------------------------------------------
+:where(audio, video) {
+    display: inline-block;
+}
+
+:where(img) {
+    border: 0;
+}
+
+:where(svg):not(:root) {
+    overflow: hidden;
+}
+
+:where(canvas) {
+    display: inline-block;
+}
+
+// -----------------------------------------------------------------------------
+// Tables
+// -----------------------------------------------------------------------------
+:where(table) {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+:where(th, td) {
+    padding: 0.5em;
+    text-align: left;
+}
+
+// -----------------------------------------------------------------------------
+// Forms
+// -----------------------------------------------------------------------------
+:where(button, input, optgroup, select, textarea) {
+    line-height: inherit;
+    border: 1px solid currentColor;
+}
+
+:where(button) {
+    overflow: visible;
+    text-transform: none;
+}
+
+:where(button, [type='button'], [type='reset'], [type='submit']) {
+    -webkit-appearance: button;
+    appearance: button;
+}
+
+::placeholder {
+    color: #767676;
+    opacity: 1;
+}
+
+// -----------------------------------------------------------------------------
+// Interactive Elements
+// -----------------------------------------------------------------------------
+:where(details) {
+    display: block;
+}
+
+:where(dialog) {
+    background-color: inherit;
+    border: solid;
+    color: inherit;
+    display: block;
+    height: fit-content;
+    left: 0;
+    margin: auto;
+    padding: 1em;
+    position: absolute;
+    right: 0;
+    width: fit-content;
+    &:not([open]) {
+        display: none;
+    }
+}
+
+:where(summary) {
+    display: list-item;
+}
+
+// -----------------------------------------------------------------------------
+// Focus States
+// -----------------------------------------------------------------------------
+:focus {
+    outline: $focus-outline-width solid $focus-outline-color;
+    outline-offset: $focus-outline-offset;
+
+    &:not(:focus-visible) {
+        outline: none;
+    }
+}
+
+:focus-visible {
+    outline: $focus-outline-width solid $focus-outline-color;
+    outline-offset: $focus-outline-offset;
+}
+
+:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+
+:-moz-ui-invalid {
+    box-shadow: none;
+}
+
+// -----------------------------------------------------------------------------
+// Default Print Styles
+// -----------------------------------------------------------------------------
+@media print {
+    @page {
+        margin: 2cm;
+    }
+
+    a[href]::after {
+        content: ' (' attr(href) ')';
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    pre,
+    blockquote {
+        page-break-inside: avoid;
+    }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+// High contrast mode
+@media (forced-colors: active) {
+    * {
+        border-color: currentColor;
+    }
+}
